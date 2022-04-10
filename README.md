@@ -18,7 +18,17 @@ Make sure docker & docker-compose is installed.
 $ docker-compose up
 ```
 
-#### Step- 2
+
+#### Step- 2 (Optional)
+Initial Database and Tables
+```bash
+# development
+$ yarn init:db
+
+```
+
+
+#### Step- 3
  Run the application
 ```bash
 # development

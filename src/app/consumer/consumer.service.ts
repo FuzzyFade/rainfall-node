@@ -22,12 +22,7 @@ export class ConsumerService {
     const body = JSON.parse(data) as IConsumerRainfallData;
 
     const res = await this.prisma.event.create({
-      data: {
-        monitortime: body.monitortime,
-        rainfall: body.rainfall,
-        devicecode: body.devicecode,
-        uploadtime: body.uploadtime,
-      },
+      data: body,
     });
 
     console.log('prisma log: ', res);
