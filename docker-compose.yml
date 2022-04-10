@@ -25,14 +25,14 @@ services:
     depends_on:
       - zookeeper
   db:
-    image: mysql:5.7
+    image: mysql:8
     restart: always
     volumes:
       - ./_data/db:/var/lib/mysql
     ports:
       - '3306:3306'
     environment:
-      - MYSQL_DATABASE=db
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=user
-      - MYSQL_ROOT_PASSWORD='password'
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password

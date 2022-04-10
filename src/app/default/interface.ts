@@ -3,3 +3,7 @@ export interface ISendMessageParams {
   rainfall: number;
   monitortime: string;
 }
+
+export interface IConsumerRainfallData extends ISendMessageParams {
+  uploadtime: string;
+}
