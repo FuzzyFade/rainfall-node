@@ -51,3 +51,8 @@ Body
 }
 
 ```
+
+#### Download CSV
+```
+GET http://localhost:3000/download
+```
