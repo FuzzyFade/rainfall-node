@@ -1,4 +1,4 @@
-# Rainfall Real time Big data processor distributed application 
+# Rainfall Real-time Big data processor distributed application 
 
 > nodejs + nestjs + prisma + zookeeper + kafka + mysql
 
@@ -15,7 +15,7 @@ The step will automatic generate some types of Model with Prisma schema when pos
 Make sure docker & docker-compose is installed. 
 
 ```
-# Run kafka server in local machine, go to docker folder 
+# Run kafka server in local machine
 $ docker-compose up
 ```
 
@@ -23,16 +23,14 @@ $ docker-compose up
 #### Step- 2 (Optional)
 Initial Database and Tables
 ```bash
-# development
 $ yarn init:db
 
 ```
 
 
 #### Step- 3
- Run the application
+Run the application
 ```bash
-# development
 $ yarn start
 
 ```
@@ -41,6 +39,8 @@ $ yarn start
 
 ### local machine
 > example
+
+#### Push Event
 ```
 POST http://localhost:3000/send/consumer
 Body 
