@@ -12,7 +12,7 @@ datasource db {
 
 model Event {
   id          Int    @id @default(autoincrement())
-  devicecode  Int
+  devicecode  String
   rainfall    Float
   monitortime String
   uploadtime  String

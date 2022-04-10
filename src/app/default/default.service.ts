@@ -1,6 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { KafkaService } from '../common/kafka/kafka.service';
-import { KafkaPayload } from '../common/kafka/kafka.message';
+import { Injectable, Inject } from '@nestjs/common';
+import { KafkaService } from '@rob3000/nestjs-kafka';
 import { RAINFALL_TOPIC } from '../constant';
 import { ISendMessageParams } from '../default/interface';
 import { customAlphabet } from 'nanoid';
@@ -10,7 +9,7 @@ const id = customAlphabet('1234567890abcdef', 20);
 
 @Injectable()
 export class DefaultService {
-  constructor(private readonly kafkaService: KafkaService) {}
+  constructor(@Inject('RAINFALL_SERVICE') private client: KafkaService) {}
 
   async send(data: ISendMessageParams) {
     const body = {
@@ -18,14 +17,16 @@ export class DefaultService {
       uploadtime: dayjs().format('D/M/YYYY HH:mm:ss.ms'),
     };
 
-    const payload: KafkaPayload = {
-      messageId: id() + dayjs().valueOf(),
-      body,
-      messageType: 'rainfall.data',
-      topicName: RAINFALL_TOPIC,
-    };
+    const value = await this.client.send({
+      topic: RAINFALL_TOPIC,
+      messages: [
+        {
+          key: id() + dayjs().valueOf(),
+          value: JSON.stringify(body),
+        },
+      ],
+    });
 
-    const value = await this.kafkaService.sendMessage(RAINFALL_TOPIC, payload);
     console.log('kafka status ', value);
 
     return body;

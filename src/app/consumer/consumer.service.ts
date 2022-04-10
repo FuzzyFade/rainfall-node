@@ -1,21 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { SubscribeTo } from '../common/kafka/kafka.decorator';
-import { KafkaPayload } from '../common/kafka/kafka.message';
+import { Injectable, Inject } from '@nestjs/common';
+import { KafkaService, SubscribeTo } from '@rob3000/nestjs-kafka';
 import { RAINFALL_TOPIC } from '../constant';
 import { PrismaService } from '../../prisma.service';
 import { IConsumerRainfallData } from '../default/interface';
 
 @Injectable()
 export class ConsumerService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    @Inject('RAINFALL_SERVICE') private client: KafkaService,
+    private prisma: PrismaService,
+  ) {}
+
+  onModuleInit(): void {
+    this.client.subscribeToResponseOf(RAINFALL_TOPIC, this);
+  }
 
   @SubscribeTo(RAINFALL_TOPIC)
-  async rainfallSubscriber(payload: string) {
-    console.log('[KAKFA-CONSUMER] Print message after receiving', payload);
-    const data = JSON.parse(payload) as KafkaPayload;
-    const body = data.body as IConsumerRainfallData;
+  async rainfallSubscriber(data: any) {
+    console.log('[KAKFA-CONSUMER] Print message after receiving', data);
 
-    console.log(body)
+    const body = JSON.parse(data) as IConsumerRainfallData;
 
     const res = await this.prisma.event.create({
       data: {
@@ -26,6 +30,6 @@ export class ConsumerService {
       },
     });
 
-    console.log('prisma log: ', res)
+    console.log('prisma log: ', res);
   }
 }

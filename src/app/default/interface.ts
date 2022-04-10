@@ -1,6 +1,6 @@
 export interface ISendMessageParams {
-  devicecode: number;
   rainfall: number;
+  devicecode: string;
   monitortime: string;
 }
 
