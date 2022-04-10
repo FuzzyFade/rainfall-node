@@ -7,6 +7,7 @@
 ```bash
 $ yarn install
 ```
+The step will automatic generate some types of Model with Prisma schema when post-install
 
 ## Running the app
 
