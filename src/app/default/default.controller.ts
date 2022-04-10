@@ -1,7 +1,18 @@
-import { Controller, Post, Body, UsePipes } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UsePipes,
+  Get,
+  Response,
+} from '@nestjs/common';
 import { DefaultService } from './default.service';
+import { Response as Res } from 'express';
 import { rainfallScheme, ISendMessageParams } from './interface';
 import { JoiValidationPipe } from './validation.pipe';
+import * as csv from 'fast-csv';
+import { createReadStream } from 'fs';
+import { resolve } from 'path';
 
 @Controller()
 export class DefaultController {
@@ -11,5 +22,22 @@ export class DefaultController {
   @UsePipes(new JoiValidationPipe(rainfallScheme))
   async sendToConsumer(@Body() params: ISendMessageParams) {
     return await this.appService.send(params);
+  }
+
+  @Get('/download')
+  async getDownloadData(@Response() res: Res) {
+    res.setHeader('Content-Type', 'attachment; filename=data.csv');
+    res.setHeader('Content-disposition', 'text/csv');
+
+    const csvStream = csv.format({ headers: true });
+
+    csvStream.pipe(res);
+
+    for await (const event of this.appService.streamEvents({
+      batchSize: 200,
+    })) {
+      csvStream.write(event);
+    }
+    csvStream.end();
   }
 }
