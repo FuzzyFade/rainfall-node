@@ -11,8 +11,6 @@ import { Response as Res } from 'express';
 import { rainfallScheme, ISendMessageParams } from './interface';
 import { JoiValidationPipe } from './validation.pipe';
 import * as csv from 'fast-csv';
-import { createReadStream } from 'fs';
-import { resolve } from 'path';
 
 @Controller()
 export class DefaultController {

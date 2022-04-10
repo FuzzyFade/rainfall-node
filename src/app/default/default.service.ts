@@ -4,9 +4,7 @@ import { RAINFALL_TOPIC } from '../constant';
 import { ISendMessageParams } from '../default/interface';
 import { customAlphabet } from 'nanoid';
 import { PrismaService } from '../../prisma.service';
-import { Event } from '@prisma/client';
 import { Readable } from 'stream';
-import * as fs from 'fs';
 import * as dayjs from 'dayjs';
 
 const id = customAlphabet('1234567890abcdef', 20);
