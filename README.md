@@ -1,3 +1,7 @@
+# Rainfall Real time Big data processor distributed application 
+
+> nodejs + nestjs + prisma + zookeeper + kafka + mysql
+
 ## Installation
 
 ```bash
@@ -21,15 +25,3 @@ $ docker-compose up
 $ yarn start
 
 ```
-
-#### Step- 3
-Send message to Kafka & receive message by consumer testing.
-1.  http://localhost:3000/send/consumer   - send a sample message to kafka & consumer receives and print in application log
-2.  http://localhost:3000/send/fixed-consumer
-
-When you call above api, application console log will print " [KAKFA-CONSUMER] ...." .
-
-
-
-## License
-Nest is [MIT licensed](LICENSE).
