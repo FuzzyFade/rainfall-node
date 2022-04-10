@@ -36,3 +36,18 @@ $ yarn init:db
 $ yarn start
 
 ```
+
+## API Document
+
+### local machine
+> example
+```
+POST http://localhost:3000/send/consumer
+Body 
+{
+    "devicecode": "4396123012",
+    "rainfall": 1.213,
+    "monitortime": "23/9/2021 18:50:00"
+}
+
+```
